@@ -39,44 +39,45 @@ export function Home() {
 
   return (
     <div className="container mx-auto p-4">
-    <h1 className="text-2xl font-bold mb-4">Movie List</h1>
-    <div className="flex flex-row justify-between">
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className="text-red-500">Error: {error}</p>
-      ) : (
-        <ul className="list-disc pl-5 w-[400px]">
-          {getData.map((movie) => (
-            <li
-              key={movie.id}
-              className="cursor-pointer hover:text-blue-500 mb-2"
-              onClick={() => handleMovie(movie)}
-            >
-              {movie.title}
-            </li>
-          ))}
-        </ul>
-      )}
+      <h1 className="text-2xl font-bold mb-4">Movie List</h1>
+      <div className="flex flex-col md:flex-row justify-between">
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p className="text-red-500">Error: {error}</p>
+        ) : (
+          <ul className="list-disc pl-5 md:w-1/2">
+            {getData.map((movie) => (
+              <li
+                key={movie.id}
+                className="cursor-pointer hover:text-blue-500 mb-2"
+                onClick={() => handleMovie(movie)}
+              >
+                {movie.title}
+              </li>
+            ))}
+          </ul>
+        )}
 
-      {selectedMovie && (
-        <div className="ml-10 flex-shrink-0 w-[600px]">
-          <h2 className="text-xl font-semibold mb-2">Selected Movie</h2>
-          <img
-            src={`https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}`}
-            alt={selectedMovie.title}
-            className="mb-4 rounded-lg shadow-lg w-96 h-96"
-          />
-          <p className="mb-2">
-            <strong>Title:</strong> {selectedMovie.title}
-          </p>
-          <p className="mb-2 w-96">
-            <strong>Overview:</strong> {selectedMovie.overview}
-          </p>
-          <Barcode value={`TICKET-${selectedMovie.id}`} />
-        </div>
-      )}
+        {selectedMovie && (
+          <div className="mt-4 md:mt-0 md:ml-10 flex-shrink-0 md:w-1/2">
+            <h2 className="text-xl font-semibold mb-2">Selected Movie</h2>
+            <img
+              src={`https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}`}
+              alt={selectedMovie.title}
+              className="mb-4 rounded-lg shadow-lg w-full md:w-96 h-96"
+            />
+            <p className="mb-2">
+              <strong>Title:</strong> {selectedMovie.title}
+            </p>
+            <p className="mb-2 w-96">
+              <strong>Overview:</strong> {selectedMovie.overview}
+            </p>
+            <Barcode value={`TICKET-${selectedMovie.id}`} />
+          </div>
+        )}
+      </div>
     </div>
-  </div>
+
 );
 }
