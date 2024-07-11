@@ -6,6 +6,7 @@ export function Home() {
   const [getData, setData] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
@@ -20,9 +21,11 @@ export function Home() {
 
       console.log(api.data, ">>> result");
       setData(api.data.results);
+      setLoading(false);
     } catch (error) {
       console.log(error);
       setError(error.message);
+      setLoading(false);
     }
   };
 
@@ -35,43 +38,45 @@ export function Home() {
   };
 
   return (
-    <>
-      <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">Movie List</h1>
-        {error ? (
-          <p className="text-red-500">Error: {error}</p>
-        ) : (
-          <ul className="list-disc pl-5">
-            {getData.map((movie) => (
-              <li
-                key={movie.id}
-                className="cursor-pointer hover:text-blue-500"
-                onClick={() => handleMovie(movie)}
-              >
-                {movie.title}
-              </li>
-            ))}
-          </ul>
-        )}
+    <div className="container mx-auto p-4">
+    <h1 className="text-2xl font-bold mb-4">Movie List</h1>
+    <div className="flex flex-row justify-between">
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p className="text-red-500">Error: {error}</p>
+      ) : (
+        <ul className="list-disc pl-5 w-[400px]">
+          {getData.map((movie) => (
+            <li
+              key={movie.id}
+              className="cursor-pointer hover:text-blue-500 mb-2"
+              onClick={() => handleMovie(movie)}
+            >
+              {movie.title}
+            </li>
+          ))}
+        </ul>
+      )}
 
-        {selectedMovie && (
-          <div className="mt-6">
-            <h2 className="text-xl font-semibold mb-2">Selected Movie</h2>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}`}
-              alt={selectedMovie.title}
-              className="mb-4 rounded-lg shadow-lg"
-            />
-            <p className="mb-2">
-              <strong>Title:</strong> {selectedMovie.title}
-            </p>
-            <p className="mb-2">
-              <strong>Overview:</strong> {selectedMovie.overview}
-            </p>
-            <Barcode value={`TICKET-${selectedMovie.id}`} />
-          </div>
-        )}
-      </div>
-    </>
-  );
+      {selectedMovie && (
+        <div className="ml-10 flex-shrink-0 w-[600px]">
+          <h2 className="text-xl font-semibold mb-2">Selected Movie</h2>
+          <img
+            src={`https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}`}
+            alt={selectedMovie.title}
+            className="mb-4 rounded-lg shadow-lg w-96 h-96"
+          />
+          <p className="mb-2">
+            <strong>Title:</strong> {selectedMovie.title}
+          </p>
+          <p className="mb-2 w-96">
+            <strong>Overview:</strong> {selectedMovie.overview}
+          </p>
+          <Barcode value={`TICKET-${selectedMovie.id}`} />
+        </div>
+      )}
+    </div>
+  </div>
+);
 }
