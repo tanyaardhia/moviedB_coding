@@ -54,19 +54,23 @@ export function Home() {
           </ul>
         )}
 
-{selectedMovie && (
-        <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-2">Selected Movie</h2>
-          <img
-            src={`https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}`}
-            alt={selectedMovie.title}
-            className="mb-4 rounded-lg shadow-lg"
-          />
-          <p className="mb-2"><strong>Title:</strong> {selectedMovie.title}</p>
-          <p className="mb-2"><strong>Overview:</strong> {selectedMovie.overview}</p>
-          <Barcode value={`TICKET-${selectedMovie.id}`} />
-        </div>
-      )}
+        {selectedMovie && (
+          <div className="mt-6">
+            <h2 className="text-xl font-semibold mb-2">Selected Movie</h2>
+            <img
+              src={`https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}`}
+              alt={selectedMovie.title}
+              className="mb-4 rounded-lg shadow-lg"
+            />
+            <p className="mb-2">
+              <strong>Title:</strong> {selectedMovie.title}
+            </p>
+            <p className="mb-2">
+              <strong>Overview:</strong> {selectedMovie.overview}
+            </p>
+            <Barcode value={`TICKET-${selectedMovie.id}`} />
+          </div>
+        )}
       </div>
     </>
   );
